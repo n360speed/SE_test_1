@@ -8,6 +8,7 @@ create_dir()
 if sys.argv.__contains__("test"):
     test1()
     test2()
+    test2_2()
     test3()
     test4()
     test5()
