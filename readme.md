@@ -23,8 +23,9 @@ pip install requests
 To run from command prompt on of the following:
 ```sh
 python main.py
-py main.py
 python3.6 main.py
+# if you have py setup as alias you can use the following
+py main.py
 ```
 
 To run tests, not pass fail, but way to test my logic:
