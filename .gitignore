@@ -1,11 +1,4 @@
 .~lock.SE_test_1.odt#
 SE_test_1.odt
-agg.txt
-grouped_success.json
-response.json
-response.txt
-success_rate.txt
-test_agg.txt
-test_grouped_success.json
-test_response.json
-test_success_rate.txt
+
+/output

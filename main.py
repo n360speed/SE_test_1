@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import requests, sys, json, random
+import requests, sys, json, random, os
 
 def read_file(filename):
     lines = ""
@@ -19,16 +19,20 @@ def get_server_status(server, api_endpoint = "/status"):
     data = requests.get(url).json()
     return data
 
-def purge_file(filename = "response.txt"):
+def purge_file(filename = "./output/response.txt"):
     with open(filename, "w") as f:
         f.write("")
 
-def write_to_file(content, filename = "response.txt"):
+def create_dir(dir="./output/test"):
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+
+def write_to_file(content, filename = "./output/response.txt"):
     with open(filename, "a") as f:
         f.write(content)
 
 def get_servers_status(servers):
-    purge_file("response.json") 
+    purge_file("./output/response.json") 
     jToFile = json.loads("[]")
     
     for server in servers:
@@ -38,10 +42,10 @@ def get_servers_status(servers):
         except:
             print("No response from " + server)
 
-    purge_file("response.json")
-    write_to_file(str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n",""), "response.json")
+    purge_file("./output/response.json")
+    write_to_file(str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n",""), "./output/response.json")
 
-def write_success_rates(readfile="response.json", writefile="success_rate.txt"):
+def write_success_rates(readfile="./output/response.json", writefile="./output/success_rate.txt"):
     responses = read_file_for_json(readfile)
     jsonRes = json.loads(responses)
     purge_file(writefile)
@@ -54,7 +58,7 @@ def write_success_rates(readfile="response.json", writefile="success_rate.txt"):
             + str(sec) + "\n"
         write_to_file(result,writefile)
 
-def group_success_rate(readfile="success_rate.txt", writefile="grouped_success.json"):
+def group_success_rate(readfile="./output/success_rate.txt", writefile="./output/grouped_success.json"):
     successRates = read_file(readfile)
     groups = []
     for successRate in successRates:
@@ -82,7 +86,7 @@ def group_success_rate(readfile="success_rate.txt", writefile="grouped_success.j
     purge_file(writefile)
     write_to_file(json.dumps(groups),writefile)
 
-def compute_and_display(readfile="grouped_success.json", writefile="agg.txt"):
+def compute_and_display(readfile="./output/grouped_success.json", writefile="./output/agg.txt"):
     testGrouped = read_file_for_json(readfile)
     
     purge_file(writefile)
@@ -113,17 +117,19 @@ def test3():
     for i in range(0,500):
         rNum = random.randint(0,999)
         jToFile.append(f[rNum].replace("[","").replace("]",""))
-    purge_file("test_response.json")
-    write_to_file(str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n",""), "test_response.json")
+    purge_file("./output/test/test_response.json")
+    write_to_file(str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n",""), "./output/test/test_response.json")
 
 def test4():
-    write_success_rates("test_response.json", "test_success_rate.txt")
+    write_success_rates("./output/test/test_response.json", "./output/test/test_success_rate.txt")
 
 def test5():
-    group_success_rate("test_success_rate.txt", "test_grouped_success.json")
+    group_success_rate("./output/test/test_success_rate.txt", "./output/test/test_grouped_success.json")
 
 def test6():
-    compute_and_display("test_grouped_success.json", "test_agg.txt")
+    compute_and_display("./output/test/test_grouped_success.json", "./output/test/test_agg.txt")
+
+create_dir()
 
 if sys.argv.__contains__("test"):
     test1()
