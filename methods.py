@@ -91,7 +91,7 @@ def compute_and_display(readfile="./output/grouped_success.json", writefile="./o
     
     purge_file(writefile)
     for output in json.loads(testGrouped):
-        sp = json.dumps(output.keys()).replace("\"","").replace("[","").replace("]","").split("_")
+        sp = json.dumps(output.keys()).replace("[\"","").replace("\"]","").split("_")
         na = sp[0]
         vr = sp[1]
         result = json.loads(json.dumps(output.values()))
