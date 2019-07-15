@@ -37,7 +37,8 @@ def get_servers_status(servers):
     for server in servers:
         try:
             f = get_server_status("http://" + server.strip())
-            jToFile.append(f)
+            j = json.dumps(f)
+            jToFile.append(j)
         except:
             print("No response from " + server)
 

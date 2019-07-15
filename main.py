@@ -11,8 +11,11 @@ if sys.argv.__contains__("test"):
     test2_2()
     test3()
     test4()
+    test4_2()
     test5()
+    test5_2()
     test6()
+    test6_2()
 else:
     # Read server file
     servers = read_file("SE_test_1_servers.txt")

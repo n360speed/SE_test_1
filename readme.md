@@ -32,4 +32,5 @@ To run tests, not pass fail, but way to test my logic:
 ```sh
 python main.py test
 cat ./output/test/test_agg.txt | awk '{print $1 "    " $2 "    " $3}'
+cat ./output/test/agg.txt | awk '{print $1 "    " $2 "    " $3}'
 ```
