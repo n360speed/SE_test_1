@@ -6,8 +6,10 @@ def test_get_servers_status(servers):
     
     for server in servers:
         try:
-            f = get_server_status("https://github.com/n360speed/SE_test_1/blob/master/" + server, ".json")
-            jToFile.append(f.replace("[","").replace("]",""))
+            # print("https://raw.githubusercontent.com/n360speed/SE_test_1/master/tests/" + server + ".json")
+            f = get_server_status("https://raw.githubusercontent.com/n360speed/SE_test_1/master/tests/" + server.strip() + ".json", "")
+            #"https://raw.githubusercontent.com/n360speed/SE_test_1/master/tests/server-0001json"
+            jToFile.append(f)
         except:
             print("No response from " + server)
 

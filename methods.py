@@ -14,6 +14,7 @@ def read_file_for_json(filename):
 
 def get_server_status(server, api_endpoint = "/status"):
     url = server + api_endpoint
+    print(url)
     data = requests.get(url).json()
     return data
 
@@ -35,8 +36,8 @@ def get_servers_status(servers):
     
     for server in servers:
         try:
-            f = get_server_status("http://" + server)
-            jToFile.append(f.replace("[","").replace("]",""))
+            f = get_server_status("http://" + server.strip())
+            jToFile.append(f)
         except:
             print("No response from " + server)
 
