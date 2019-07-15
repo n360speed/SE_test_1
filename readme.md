@@ -20,12 +20,18 @@ sudo apt install python3.6 python-pip
 pip install requests
 ```
 
-To run from command prompt on of the following:
+To run from command prompt one of the following:
 ```sh
 python main.py
 python3.6 main.py
 # if you have py setup as alias you can use the following
 py main.py
+
+# You can also spin up the docker container with the following
+docker build --tag se_test_1 .
+docker run -it se_test_1:latest
+cd /SE_test_1 # You shouldn't need to do this but states expected location
+python main.py
 ```
 
 To run tests, not pass fail, but way to test my logic:

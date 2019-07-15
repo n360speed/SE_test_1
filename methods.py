@@ -30,20 +30,19 @@ def write_to_file(content, filename = "./output/response.txt"):
     with open(filename, "a") as f:
         f.write(content)
 
-def get_servers_status(servers):
-    purge_file("./output/response.json") 
+def get_servers_status(servers, filename="./output/response.json", url_prefix="http://", api="/status"):
     jToFile = json.loads("[]")
     
     for server in servers:
         try:
-            f = get_server_status("http://" + server.strip())
+            f = get_server_status(url_prefix + server.strip(), api)
             j = json.dumps(f)
             jToFile.append(j)
         except:
             print("No response from " + server)
 
-    purge_file("./output/response.json")
-    write_to_file(str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n",""), "./output/response.json")
+    value = str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n","")
+    write_to_file(value, filename)
 
 def write_success_rates(readfile="./output/response.json", writefile="./output/success_rate.txt"):
     responses = read_file_for_json(readfile)
