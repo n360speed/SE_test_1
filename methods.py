@@ -1,4 +1,5 @@
 import requests, sys, json, random, os
+from itertools import groupby
 
 def read_file(filename):
     lines = ""
@@ -59,31 +60,24 @@ def write_success_rates(readfile="./output/response.json", writefile="./output/s
 
 def group_success_rate(readfile="./output/success_rate.txt", writefile="./output/grouped_success.json"):
     successRates = read_file(readfile)
-    groups = []
-    for successRate in successRates:
-        items = successRate.replace("\n","").split(" \t")
-        key = items[0] + "_" + items[1]
+    result = []
+    
+    groups = groupby(successRates, lambda successRate: (successRate.split(" \t")[0] + "_"  + successRate.split(" \t")[1]))
+    print(groups)
+    for key, group in groups:
+        print('key', key)
+        rc = 0
+        sc = 0
+        for content in group:
+            print('\t', content)
+            sp = content.split(" \t")
+            rc += float(sp[2])
+            sc += float(sp[3])
+        result.append({ key : {"Request_Count": rc, \
+            "Success_Count": sc}})
 
-        i = 0
-        found = False
-        for group in groups:
-            if groups[i].get(key):
-                found = True
-
-                rc = float(groups[i].get(key)['Request_Count']) + float(items[2])
-                sc = float(groups[i].get(key)["Success_Count"]) + float(items[3])
-
-                groups[i].get(key).update({"Request_Count": rc })
-                groups[i].get(key).update({"Success_Count":  sc })
-                break
-            i = i + 1
-        
-        if not found:
-            groups.append({ key : {"Request_Count": items[2], \
-                "Success_Count": items[3]}})
-                    
     purge_file(writefile)
-    write_to_file(json.dumps(groups),writefile)
+    write_to_file(json.dumps(result),writefile)
 
 def compute_and_display(readfile="./output/grouped_success.json", writefile="./output/agg.txt"):
     testGrouped = read_file_for_json(readfile)
