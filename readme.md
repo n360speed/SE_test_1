@@ -40,3 +40,10 @@ python main.py test
 cat ./output/test/test_agg.txt | awk '{print $1 "    " $2 "    " $3}'
 cat ./output/test/agg.txt | awk '{print $1 "    " $2 "    " $3}'
 ```
+
+You might want to take a look at the different tags, to see
+some progression
+```sh
+git tag -l
+git checkout <tagName>
+```
