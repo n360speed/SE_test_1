@@ -9,6 +9,24 @@ git clone https://github.com/n360speed/SE_test_1.git
 cd SE_test_1
 ```
 
+Easiest way to run:
+```sh
+docker build --tag se_test_1 .
+docker run -it se_test_1:latest
+
+# To run python program
+./main.py
+
+# To run python program tests
+./main.py test
+
+# to run batch script
+./process.sh SE_test_1_servers.txt
+
+# to run batch script tests
+./process.sh tests/test_servers.txt "https://raw.githubusercontent.com/n360speed/SE_test_1/master/tests/" ".json"
+```
+
 Assumptions:
   * You have extracted the contents of this project
   * You have cd to the extracted directory
@@ -23,7 +41,6 @@ Assumptions:
     
     cat main.py | tr -d '\r' >> main.py2 && mv -f main.py2 main.py
     ```
-
 
 Required to run:
 ```sh
