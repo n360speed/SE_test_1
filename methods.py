@@ -42,6 +42,7 @@ def get_servers_status(servers, filename="./output/response.json", url_prefix="h
         except:
             print("No response from " + server)
 
+    purge_file(filename)
     value = str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n","")
     write_to_file(value, filename)
 
