@@ -26,7 +26,9 @@ docker run -it se_test_1:latest
 # to run batch script tests
 ./process.sh tests/test_servers.txt "https://raw.githubusercontent.com/n360speed/SE_test_1/master/tests/" ".json"
 ```
-
+___
+More Info
+___
 Assumptions:
   * You have extracted the contents of this project
   * You have cd to the extracted directory
