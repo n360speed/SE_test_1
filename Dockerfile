@@ -9,7 +9,8 @@ RUN apt-get update && apt-get install -y \
     python3-pip \
     bc && \
     pip install requests && \
-    pip3 install requests
+    pip3 install requests && \
+    pip install futures
 
 COPY . /SE_test_1
 

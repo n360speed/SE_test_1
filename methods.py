@@ -1,4 +1,11 @@
-import requests, sys, json, random, os
+import requests
+import sys
+import json
+import random
+import os
+import concurrent.futures
+import threading
+
 from itertools import groupby
 
 def read_file(filename):
@@ -31,16 +38,22 @@ def write_to_file(content, filename = "./output/response.txt"):
     with open(filename, "a") as f:
         f.write(content)
 
+def process_servers(server, jToFile, url_prefix, api):
+    lock = threading.Lock()
+    try:
+        f = get_server_status(url_prefix + server.strip(), api)
+        j = json.dumps(f)
+        with lock:
+            jToFile.append(j)
+    except:
+        print("No response from " + server)
+    
 def get_servers_status(servers, filename="./output/response.json", url_prefix="http://", api="/status"):
     jToFile = json.loads("[]")
     
-    for server in servers:
-        try:
-            f = get_server_status(url_prefix + server.strip(), api)
-            j = json.dumps(f)
-            jToFile.append(j)
-        except:
-            print("No response from " + server)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=100) as executor:
+        for server in servers:
+            executor.submit(process_servers, server, jToFile, url_prefix, api)
 
     purge_file(filename)
     value = str(jToFile).replace(r"'","").replace("\\n,","\n").replace(",\\n","")
